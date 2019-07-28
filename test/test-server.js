@@ -30,7 +30,7 @@ const generateBlogPostData = function () {
           },
           title: faker.random.words(),
           content: faker.random.words(),
-          created:  Date.now
+          created:  Date.now()
     }
 }
 
@@ -57,5 +57,25 @@ const tearDownDb = function () {
     after(function(){
         return closeServer()
     })
-  })
+
+    describe('GET Endpoint', function () {
+        it('should return all existing blog posts', function(){
+            return chai.request(app)
+            .get('/posts')
+            .then(res => {
+                expect(res.body).to.be.an('array')
+                expect(res).to.have.status(200)
+                expect(res.body).to.have.lengthOf.at.least(1)
+            })
+
+
+        })    
+    })
+  
+
+
+
+})
+
+
 
