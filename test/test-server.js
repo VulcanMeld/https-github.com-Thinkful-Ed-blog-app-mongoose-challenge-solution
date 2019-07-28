@@ -39,3 +39,23 @@ const tearDownDb = function () {
     return mongoose.connection.dropDatabase();
   }
 
+  describe('Blog posts API resource', function (){
+
+
+    before(function(){
+        return runServer(TEST_DATABASE_URL)
+    })
+
+    beforeEach(function(){
+        return seedBlogPostData()
+    })
+
+    afterEach(function () {
+        return tearDownDb()
+    })
+
+    after(function(){
+        return closeServer()
+    })
+  })
+
