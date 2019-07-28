@@ -60,16 +60,31 @@ const tearDownDb = function () {
 
     describe('GET Endpoint', function () {
         it('should return all existing blog posts', function(){
+            let _res;
             return chai.request(app)
             .get('/posts')
             .then(res => {
+                _res = res;
                 expect(res.body).to.be.an('array')
                 expect(res).to.have.status(200)
                 expect(res.body).to.have.lengthOf.at.least(1)
+                return BlogPost.count()
+            })
+            .then(count => {
+                expect(_res.body).to.have.lengthOf(count)
             })
 
 
-        })    
+        })
+        
+        it('should return posta that match all of the existing post', function(){
+            return chai.request(app)
+            .get('/posts')
+            .then(res => {
+                expect(res).to.have.status(200)
+                expect(res)
+            })
+        })
     })
   
 
